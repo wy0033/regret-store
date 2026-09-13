@@ -654,7 +654,7 @@ body.night .night-remind{display:flex;animation:riseIn .7s ease .9s both}
         <div class="voice-row">
           <button class="voice-btn" id="voiceBtn">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>
-            <span id="voiceLabel">听「大四的你」读这封信</span>
+            <span id="voiceLabel">听「四年后的你」读这封信</span>
           </button>
           <button class="voice-btn" id="voiceStop" style="display:none">停止朗读</button>
         </div>
@@ -714,7 +714,7 @@ body.night .night-remind{display:flex;animation:riseIn .7s ease .9s both}
 <div class="modal-mask" id="shareModal">
   <div class="modal">
     <h3 id="shareTitle">分享这瓶药</h3>
-    <p class="modal-sub">把四年后的答案，递给朋友</p>
+    <p class="modal-sub" id="shareSub">把四年后的答案，递给朋友</p>
     <div class="share-card">
       <div class="share-kv" id="shareKv"></div>
       <div class="share-text" id="shareText"></div>
@@ -817,6 +817,23 @@ function fill(text, d){
              .replace('{grade}', d.grade || '大二')
              .replace('{major}', d.major || '大学');
 }
+const GRADE_YEARS = {大一:4, 大二:3, 大三:2, 大四:1};
+const YEARS_CN = {4:'四', 3:'三', 2:'两', 1:'一'};
+function gradeYears(g){ return GRADE_YEARS[g] || 4; }
+function yearsText(g){ return (YEARS_CN[gradeYears(g)] || '四') + '年'; }
+function voiceLabelText(){ return '听「' + yearsText(state.grade) + '后的你」读这封信'; }
+function applyYears(text, g){
+  const cn = YEARS_CN[gradeYears(g)] || '四';
+  return text
+    .split('三年').join('很久')
+    .split('大三的秋天').join('后来的那个秋天')
+    .split('大三体测').join('那学期的体测')
+    .split('这四年').join('大学里')
+    .split('四年前的我们').join(cn + '年前的我们')
+    .split('你有四年').join('你有' + cn + '年')
+    .split('你的四年，值得').join('剩下的' + cn + '年，值得')
+    .split('四年后').join(cn + '年后');
+}
 function buildLetter(p, s){
   let t = fill(p.letter, s);
   t = t.replace('嘿，现在的你', '嘿，' + (s.nick || '现在的你'));
@@ -843,7 +860,8 @@ function buildLetter(p, s){
     t = t.replace('但你拿到了 offer，心里有底', '但你通过了笔试和面试，心里有底');
     t = t.replace('签完三方协议的那个下午', '在公示名单上看到自己名字的那个下午');
   }
-  return t;
+  t = applyYears(t, s.grade);
+  return t.split('—— 大四的你').join('—— ' + yearsText(s.grade) + '后的你');
 }
 
 /* ===== 开场 ===== */
@@ -980,7 +998,7 @@ function goalKw(p, s){
     if(p.keyword[0].includes('进了心仪的公司')) return '四年后：考上了心仪的岗位';
     if(p.keyword[0].includes('签了三方')) return '四年后：通过考试，心里有底';
   }
-  return p.keyword[0];
+  return applyYears(p.keyword[0], s.grade);
 }
 function kvTags(p, s){
   const kv = [];
@@ -1009,13 +1027,14 @@ function showResult(){
   typeLetter(letter);
   $('kcardBody').innerHTML = kvTags(p, state);
   $('actList').innerHTML = p.actions.map((a,i)=>`
-    <li data-i="${i}"><span class="tick"></span><span>${a}</span></li>`).join('');
+    <li data-i="${i}"><span class="tick"></span><span>${applyYears(a, state.grade)}</span></li>`).join('');
   $('actList').querySelectorAll('li').forEach(li=>{
     li.addEventListener('click', ()=>li.classList.toggle('done'));
   });
   $('collectBtn').textContent = state.collected.includes(p.id) ? '再记一次' : '收进药盒';
   $('voiceStop').style.display = 'none';
   stopVoice();
+  $('voiceLabel').textContent = voiceLabelText();
   showScreen('result');
   toast('店长：' + CLERK.bye);
 }
@@ -1052,12 +1071,12 @@ function speakLetter(){
   $('voiceLabel').textContent = '朗读中……';
   $('voiceBtn').classList.add('playing');
   $('voiceStop').style.display = '';
-  u.onend = ()=>{ voiceOn=false; $('voiceLabel').textContent='听「大四的你」读这封信'; $('voiceBtn').classList.remove('playing'); $('voiceStop').style.display='none'; };
+  u.onend = ()=>{ voiceOn=false; $('voiceLabel').textContent=voiceLabelText(); $('voiceBtn').classList.remove('playing'); $('voiceStop').style.display='none'; };
 }
 function stopVoice(){
   if('speechSynthesis' in window) speechSynthesis.cancel();
   voiceOn = false;
-  $('voiceLabel').textContent = '听「大四的你」读这封信';
+  $('voiceLabel').textContent = voiceLabelText();
   $('voiceBtn').classList.remove('playing');
   $('voiceStop').style.display = 'none';
 }
@@ -1118,7 +1137,7 @@ function renderRecCard(pill, r, idx){
   const letter = buildLetter(pill, s);
   const acts = (pill.actions||[]).map((a,i)=>{
     const d = r.done && r.done[i];
-    return `<li data-i="${i}" class="${d?'done':''}"><span class="tick"></span><span>${a}</span></li>`;
+    return `<li data-i="${i}" class="${d?'done':''}"><span class="tick"></span><span>${applyYears(a, r.grade)}</span></li>`;
   }).join('');
   return `<div class="rec-card" data-idx="${idx}">
     <div class="rec-head">${esc(r.time)} · ${r.version==='pro'?'进阶定制':'普通配方'} · ${esc(r.grade||'')}${esc(r.major?(' · '+r.major):'')}</div>
@@ -1214,6 +1233,7 @@ function buildShareText(p){
 $('shareBtn').addEventListener('click', ()=>{
   const p = state.pill;
   $('shareTitle').textContent = `「${p.name}」后悔药`;
+  $('shareSub').textContent = '把' + yearsText(state.grade) + '后的答案，递给朋友';
   $('shareKv').innerHTML = kvTags(p, state);
   $('shareText').textContent = buildShareText(p);
   $('shareModal').classList.add('show');
