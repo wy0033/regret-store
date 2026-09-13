@@ -658,7 +658,7 @@ body.night .night-remind{display:flex;animation:riseIn .7s ease .9s both}
           </button>
           <button class="voice-btn" id="voiceStop" style="display:none">停止朗读</button>
         </div>
-        <div class="voice-note">温柔女声 · 深夜电台语速 · 按你选的性别匹配音色</div>
+        <div class="voice-note" id="voiceNote">温柔女声 · 深夜电台语速 · 按你选的性别匹配音色</div>
 
         <div class="kcard">
           <div class="kcard-head">
@@ -826,8 +826,6 @@ function applyYears(text, g){
   const cn = YEARS_CN[gradeYears(g)] || '四';
   return text
     .split('三年').join('很久')
-    .split('大三的秋天').join('后来的那个秋天')
-    .split('大三体测').join('那学期的体测')
     .split('这四年').join('大学里')
     .split('四年前的我们').join(cn + '年前的我们')
     .split('你有四年').join('你有' + cn + '年')
@@ -859,6 +857,21 @@ function buildLetter(p, s){
     t = t.replace('都在变成你简历上的一行字', '都在变成你成绩单上的一行字');
     t = t.replace('但你拿到了 offer，心里有底', '但你通过了笔试和面试，心里有底');
     t = t.replace('签完三方协议的那个下午', '在公示名单上看到自己名字的那个下午');
+  }
+  // 按年级微调正文中的固定时间点（大一未来 / 大二当下 / 大三临近 / 大四回顾）
+  if(p.id==='p3'){
+    const p3map={大一:'到了大二下学期，你开始',大二:'就是从这学期开始，你',大三:'大二下学期你开始',大四:'大二下学期你开始'};
+    t = t.replace('大二下学期你开始', p3map[s.grade]||'大二下学期你开始');
+  }
+  if(p.id==='p4'){
+    const p4map={大一:'到了大三的秋天，',大二:'到了大三的秋天，',大三:'就是今年秋天，',大四:'大三的秋天，'};
+    t = t.replace('就在大三的秋天，', p4map[s.grade]||'就在大三的秋天，');
+  }
+  if(p.id==='p8'){
+    const p8a={大一:'因为到了大二，你也是这样',大二:'因为现在的你，就是这样',大三:'因为大二那年的我，也是这样',大四:'因为大二那年的我，也是这样'};
+    t = t.replace('因为大二那年的我，也是这样', p8a[s.grade]||'因为大二那年的我，也是这样');
+    const p8b={大一:'到了大三体测，你跑完八百米',大二:'到了大三体测，你跑完八百米',大三:'这次体测，你跑完八百米',大四:'大三体测你跑完八百米'};
+    t = t.replace('大三体测你跑完八百米', p8b[s.grade]||'大三体测你跑完八百米');
   }
   t = applyYears(t, s.grade);
   return t.split('—— 大四的你').join('—— ' + yearsText(s.grade) + '后的你');
@@ -1035,6 +1048,7 @@ function showResult(){
   $('voiceStop').style.display = 'none';
   stopVoice();
   $('voiceLabel').textContent = voiceLabelText();
+  $('voiceNote').textContent = (state.gender==='男生' ? '温柔男声' : '温柔女声') + ' · 深夜电台语速 · 按你选的性别匹配音色';
   showScreen('result');
   toast('店长：' + CLERK.bye);
 }
