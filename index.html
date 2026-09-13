@@ -358,6 +358,56 @@ body.night .night-remind{display:flex;animation:riseIn .7s ease .9s both}
 .result-actions{display:flex;gap:12px;margin-top:28px;flex-wrap:wrap}
 .result-actions .btn{flex:1;min-width:150px}
 
+/* ===== 登录/注册屏 ===== */
+#loginScreen{
+  position:fixed;inset:0;z-index:200;background:var(--bg);overflow:auto;
+  display:flex;align-items:center;justify-content:center;padding:24px 16px;
+}
+#loginScreen.hide{display:none}
+.login-card{
+  width:100%;max-width:400px;background:var(--panel);border:1.5px solid var(--line);
+  border-radius:26px;padding:34px 30px 26px;box-shadow:var(--shadow);animation:pop .45s ease both;
+}
+.login-brand{display:flex;align-items:center;gap:10px;justify-content:center;font-family:var(--font-title);font-size:24px;letter-spacing:1px}
+.login-brand .logo{width:42px;height:42px;border-radius:13px;background:linear-gradient(145deg,var(--amber),var(--brown));display:flex;align-items:center;justify-content:center;color:#fff;font-size:22px;box-shadow:var(--shadow-sm)}
+.login-sub{text-align:center;color:var(--ink-soft);font-size:13px;margin:10px 0 22px}
+.login-tabs{display:flex;background:var(--bg);border:1.5px solid var(--line);border-radius:999px;padding:4px;margin-bottom:22px}
+.login-tab{flex:1;text-align:center;padding:8px 0;border-radius:999px;font-size:14px;color:var(--ink-soft);transition:all .2s;font-weight:600;letter-spacing:2px}
+.login-tab.on{background:var(--amber);color:#fff;box-shadow:var(--shadow-sm)}
+.lf{display:none}
+.lf.on{display:block}
+.lf label{display:block;font-size:13px;color:var(--ink-soft);margin:0 2px 6px}
+.lf input{
+  width:100%;background:var(--bg);border:1.5px solid var(--line);border-radius:14px;
+  padding:12px 15px;font-size:14.5px;transition:border-color .2s;
+}
+.lf input:focus{outline:none;border-color:var(--amber)}
+.lf .fld{margin-bottom:16px}
+.login-err{min-height:20px;font-size:12.5px;color:#C25E4A;margin:2px 2px 10px;line-height:1.6;font-weight:600}
+.btn-main{
+  width:100%;padding:13px 0;border-radius:999px;background:var(--amber);color:#fff;
+  font-size:15.5px;font-weight:700;letter-spacing:3px;box-shadow:var(--shadow-sm);transition:all .2s;
+}
+.btn-main:hover{opacity:.92;transform:translateY(-1px)}
+.login-tip{text-align:center;color:var(--ink-soft);font-size:11.5px;margin-top:18px;line-height:1.8;opacity:.85}
+
+/* ===== 账户弹窗 ===== */
+.acct-row{display:flex;align-items:center;gap:14px;margin:18px 0 6px;padding:16px;background:var(--bg);border:1.5px solid var(--line);border-radius:18px}
+.acct-ava{width:46px;height:46px;flex:none;border-radius:50%;background:linear-gradient(145deg,var(--amber),var(--brown));display:flex;align-items:center;justify-content:center;color:#fff;font-size:20px;font-weight:700}
+.acct-info b{display:block;font-size:16px;letter-spacing:1px}
+.acct-info span{font-size:12px;color:var(--ink-soft)}
+.acct-acts{display:flex;flex-direction:column;gap:10px;margin-top:16px}
+.acct-acts .btn-soft{
+  width:100%;padding:12px 0;border-radius:999px;border:1.5px solid var(--line);background:var(--panel);
+  font-size:14px;color:var(--ink);font-weight:600;letter-spacing:2px;transition:all .2s;
+}
+.acct-acts .btn-soft:hover{border-color:var(--amber)}
+.acct-acts .btn-danger{
+  width:100%;padding:12px 0;border-radius:999px;border:1.5px solid rgba(194,94,74,.5);background:transparent;
+  font-size:14px;color:#C25E4A;font-weight:600;letter-spacing:2px;transition:all .2s;
+}
+.acct-acts .btn-danger:hover{background:rgba(194,94,74,.08);border-color:#C25E4A}
+
 /* ===== 药盒弹窗 ===== */
 .modal-mask{
   position:fixed;inset:0;background:rgba(40,30,18,.45);backdrop-filter:blur(3px);
@@ -399,6 +449,9 @@ body.night .night-remind{display:flex;animation:riseIn .7s ease .9s both}
 .box-slot .bsub{font-size:10px;opacity:.88}
 #histList{display:flex;flex-direction:column;gap:14px;max-height:52vh;overflow:auto;margin-top:6px;padding-right:4px}
 .rec-card{background:var(--bg);border:1.5px solid var(--line);border-radius:16px;padding:14px 16px}
+.rec-head{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:12.5px;color:var(--amber-deep);font-weight:600;margin-bottom:8px;letter-spacing:.5px}
+.rec-del{flex:none;background:transparent;border:1px solid var(--line);color:var(--ink-soft);border-radius:999px;padding:3px 12px;font-size:11.5px;cursor:pointer;transition:all .2s;letter-spacing:1px}
+.rec-del:hover{background:var(--amber);border-color:var(--amber);color:#fff}
 .rec-head{font-size:12.5px;color:var(--amber-deep);font-weight:600;margin-bottom:8px;letter-spacing:.5px}
 .rec-letter{font-size:13.5px;line-height:1.9;color:var(--ink);white-space:pre-line}
 .rec-kv{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;border-top:1px dashed var(--line);padding-top:10px}
@@ -441,6 +494,32 @@ body.night .night-remind{display:flex;animation:riseIn .7s ease .9s both}
 </style>
 </head>
 <body>
+<!-- ===== 登录/注册屏 ===== -->
+<div id="loginScreen">
+  <div class="login-card">
+    <div class="login-brand"><span class="logo">药</span><span>大学后悔药便利店</span></div>
+    <p class="login-sub">先登录，再进店。药盒和药方只属于你自己的账户。</p>
+    <div class="login-tabs">
+      <button class="login-tab on" id="tabLogin" type="button">登录</button>
+      <button class="login-tab" id="tabReg" type="button">注册</button>
+    </div>
+    <form class="lf on" id="formLogin" autocomplete="off">
+      <div class="fld"><label>昵称</label><input id="liName" type="text" placeholder="你的昵称" maxlength="12"></div>
+      <div class="fld"><label>密码</label><input id="liPwd" type="password" placeholder="登录密码" maxlength="20"></div>
+      <p class="login-err" id="liErr"></p>
+      <button class="btn-main" type="submit">进入便利店</button>
+    </form>
+    <form class="lf" id="formReg" autocomplete="off">
+      <div class="fld"><label>昵称</label><input id="rgName" type="text" placeholder="取一个昵称（不可重名）" maxlength="12"></div>
+      <div class="fld"><label>密码</label><input id="rgPwd" type="password" placeholder="设置密码（4 位以上）" maxlength="20"></div>
+      <div class="fld"><label>确认密码</label><input id="rgPwd2" type="password" placeholder="再输一次密码" maxlength="20"></div>
+      <p class="login-err" id="rgErr"></p>
+      <button class="btn-main" type="submit">创建账户，进店</button>
+    </form>
+    <p class="login-tip">账户可以无限创建，也可以随时删除。<br>所有数据只保存在你这台浏览器的本地。</p>
+  </div>
+</div>
+
 <div id="app">
 <header class="top">
   <div class="brand"><span class="logo">药</span><span>大学后悔药便利店</span></div>
@@ -452,6 +531,10 @@ body.night .night-remind{display:flex;animation:riseIn .7s ease .9s both}
     <button class="top-btn" id="boxBtn" title="我的药盒">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8l-9-5-9 5v8l9 5 9-5V8z"/><path d="M3 8l9 5 9-5"/><path d="M12 13v8"/></svg>
       <span id="boxCount">药盒 0/8</span>
+    </button>
+    <button class="top-btn" id="acctBtn" title="我的账户">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <span id="acctName">账户</span>
     </button>
   </div>
 </header>
@@ -686,6 +769,23 @@ body.night .night-remind{display:flex;animation:riseIn .7s ease .9s both}
 </main>
 </div>
 
+<!-- ===== 账户弹窗 ===== -->
+<div class="modal-mask" id="acctModal">
+  <div class="modal">
+    <h3>我的账户</h3>
+    <p class="modal-sub">账户数据彼此独立，互不影响</p>
+    <div class="acct-row">
+      <div class="acct-ava" id="acctAva">?</div>
+      <div class="acct-info"><b id="acctName2"></b><span id="acctMeta"></span></div>
+    </div>
+    <div class="acct-acts">
+      <button class="btn-soft" id="logoutBtn" type="button">退出登录</button>
+      <button class="btn-danger" id="delAcctBtn" type="button">删除账户</button>
+    </div>
+    <button class="modal-close" id="acctClose">收起</button>
+  </div>
+</div>
+
 <!-- ===== 药盒弹窗 ===== -->
 <div class="modal-mask" id="boxModal">
   <div class="modal">
@@ -797,10 +897,133 @@ const CLERK = {
 };
 
 /* ===== 状态 ===== */
-let state = {screen:'open', pill:null, version:'normal', grade:'大二', major:'', gender:'保密', goal:'', nick:'', detail:'', stateInfo:'', mood:'', qIndex:null, anxiety:'', collected:[]};
+let state = {user:null, screen:'open', pill:null, version:'normal', grade:'大二', major:'', gender:'保密', goal:'', nick:'', detail:'', stateInfo:'', mood:'', qIndex:null, anxiety:'', collected:[]};
 let twTimer = null, mixTimer = null;
 const $ = id => document.getElementById(id);
 const screens = ['open','pick','input','mix','result'];
+
+/* ===== 账户系统 ===== */
+function loadAccounts(){
+  try{ return JSON.parse(localStorage.getItem('pillAccounts')||'[]'); }catch(e){ return []; }
+}
+function saveAccounts(list){
+  try{ localStorage.setItem('pillAccounts', JSON.stringify(list)); }catch(e){}
+}
+function acctKey(k){ return 'acct_' + (state.user||'guest') + '_' + k; }
+function currentAccount(){
+  return loadAccounts().find(a=>a.name===state.user) || null;
+}
+function showLogin(){
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('loginScreen').classList.remove('hide');
+}
+function enterApp(){
+  const u = currentAccount();
+  if(!u){ showLogin(); return; }
+  document.getElementById('acctName').textContent = u.name;
+  document.getElementById('acctAva').textContent = u.name.charAt(0).toUpperCase();
+  document.getElementById('acctName2').textContent = u.name;
+  document.getElementById('acctMeta').textContent = '注册于 ' + u.createdAt;
+  document.getElementById('loginScreen').classList.add('hide');
+  document.getElementById('app').style.display = '';
+  loadBox();
+  bindPills();
+  try{ if('speechSynthesis' in window){ speechSynthesis.getVoices(); } }catch(e){}
+}
+function initLogin(){
+  let cur = '';
+  try{ cur = sessionStorage.getItem('pillCurUser')||''; }catch(e){}
+  if(cur){
+    if(loadAccounts().some(a=>a.name===cur)){
+      state.user = cur;
+      loadNight();
+      enterApp();
+      return;
+    }
+  }
+  showLogin();
+}
+/* ===== 登录 / 注册 ===== */
+function loginErr(msg){ document.getElementById('liErr').textContent = msg; }
+function regErr(msg){ document.getElementById('rgErr').textContent = msg; }
+document.getElementById('tabLogin').addEventListener('click', ()=>{
+  document.getElementById('tabLogin').classList.add('on');
+  document.getElementById('tabReg').classList.remove('on');
+  document.getElementById('formLogin').classList.add('on');
+  document.getElementById('formReg').classList.remove('on');
+  loginErr(''); regErr('');
+});
+document.getElementById('tabReg').addEventListener('click', ()=>{
+  document.getElementById('tabReg').classList.add('on');
+  document.getElementById('tabLogin').classList.remove('on');
+  document.getElementById('formReg').classList.add('on');
+  document.getElementById('formLogin').classList.remove('on');
+  loginErr(''); regErr('');
+});
+document.getElementById('formLogin').addEventListener('submit', e=>{
+  e.preventDefault();
+  const name = document.getElementById('liName').value.trim();
+  const pwd = document.getElementById('liPwd').value;
+  if(!name || !pwd){ loginErr('昵称和密码都要填哦'); return; }
+  const acc = loadAccounts().find(a=>a.name===name);
+  if(!acc){ loginErr('还没有这个账户，先去「注册」一个吧'); return; }
+  if(acc.pwd !== pwd){ loginErr('密码不对，再想想'); return; }
+  state.user = name;
+  try{ sessionStorage.setItem('pillCurUser', name); }catch(e){}
+  toast('欢迎回来，' + name);
+  loadNight();
+  enterApp();
+});
+document.getElementById('formReg').addEventListener('submit', e=>{
+  e.preventDefault();
+  const name = document.getElementById('rgName').value.trim();
+  const pwd = document.getElementById('rgPwd').value;
+  const pwd2 = document.getElementById('rgPwd2').value;
+  if(!name){ regErr('先取一个昵称吧'); return; }
+  if(name.length<2){ regErr('昵称至少 2 个字'); return; }
+  if(!pwd){ regErr('设置一个密码吧'); return; }
+  if(pwd.length<4){ regErr('密码至少 4 位'); return; }
+  if(pwd !== pwd2){ regErr('两次输入的密码不一致'); return; }
+  const list = loadAccounts();
+  if(list.some(a=>a.name===name)){ regErr('这个昵称已经有人用啦，换一个试试（不能重名）'); return; }
+  const d = new Date();
+  const p2 = n => String(n).padStart(2,'0');
+  list.push({name, pwd, createdAt: d.getFullYear()+'-'+p2(d.getMonth()+1)+'-'+p2(d.getDate())});
+  saveAccounts(list);
+  state.user = name;
+  try{ sessionStorage.setItem('pillCurUser', name); }catch(e){}
+  toast('账户创建成功，欢迎进店，' + name);
+  loadNight();
+  enterApp();
+});
+/* ===== 退出 / 删除账户 ===== */
+document.getElementById('acctBtn').addEventListener('click', ()=>document.getElementById('acctModal').classList.add('show'));
+document.getElementById('acctClose').addEventListener('click', ()=>document.getElementById('acctModal').classList.remove('show'));
+document.getElementById('acctModal').addEventListener('click', e=>{ if(e.target===document.getElementById('acctModal')) document.getElementById('acctModal').classList.remove('show'); });
+document.getElementById('logoutBtn').addEventListener('click', ()=>{
+  document.getElementById('acctModal').classList.remove('show');
+  state.user = null;
+  try{ sessionStorage.removeItem('pillCurUser'); }catch(e){}
+  toast('已退出登录，下次进店记得登录');
+  showLogin();
+});
+document.getElementById('delAcctBtn').addEventListener('click', ()=>{
+  const u = currentAccount();
+  if(!u) return;
+  if(!confirm('确定删除账户「' + u.name + '」吗？')) return;
+  if(!confirm('删除后，这个账户的药盒和所有药方记录都会被清空，且无法恢复。真的要删除吗？')) return;
+  let list = loadAccounts();
+  list = list.filter(a=>a.name!==u.name);
+  saveAccounts(list);
+  try{
+    Object.keys(localStorage).forEach(k=>{ if(k.indexOf('acct_'+u.name+'_')===0) localStorage.removeItem(k); });
+  }catch(e){}
+  try{ sessionStorage.removeItem('pillCurUser'); }catch(e){}
+  state.user = null;
+  document.getElementById('acctModal').classList.remove('show');
+  toast('账户已删除');
+  showLogin();
+});
 
 /* ===== 工具 ===== */
 function showScreen(name){
@@ -1108,11 +1331,11 @@ if('speechSynthesis' in window) speechSynthesis.onvoiceschanged = ()=>pickVoice(
 
 /* ===== 药盒 ===== */
 function loadBox(){
-  try{ state.collected = JSON.parse(localStorage.getItem('pillBox')||'[]'); }catch(e){ state.collected = []; }
+  try{ state.collected = JSON.parse(localStorage.getItem(acctKey('pillBox'))||'[]'); }catch(e){ state.collected = []; }
   $('boxCount').textContent = `药盒 ${state.collected.length}/8`;
 }
 function saveBox(){
-  localStorage.setItem('pillBox', JSON.stringify(state.collected));
+  localStorage.setItem(acctKey('pillBox'), JSON.stringify(state.collected));
   $('boxCount').textContent = `药盒 ${state.collected.length}/8`;
 }
 $('collectBtn').addEventListener('click', ()=>{
@@ -1137,7 +1360,7 @@ function nowStr(){
   return `${d.getMonth()+1}-${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}`;
 }
 function getRecords(){
-  try{ return JSON.parse(localStorage.getItem('pillRecords')||'[]'); }catch(e){ return []; }
+  try{ return JSON.parse(localStorage.getItem(acctKey('pillRecords'))||'[]'); }catch(e){ return []; }
 }
 function saveRecord(){
   const rec = {
@@ -1152,7 +1375,7 @@ function saveRecord(){
   recs.unshift(rec);
   const per = {};
   recs = recs.filter(r=>{ per[r.pillId]=(per[r.pillId]||0)+1; return per[r.pillId]<=5; });
-  localStorage.setItem('pillRecords', JSON.stringify(recs));
+  localStorage.setItem(acctKey('pillRecords'), JSON.stringify(recs));
 }
 function renderRecCard(pill, r, idx){
   const s = Object.assign({}, r, {answer:(r.qIndex!=null && pill.q) ? pill.q.o[r.qIndex] : ''});
@@ -1162,7 +1385,7 @@ function renderRecCard(pill, r, idx){
     return `<li data-i="${i}" class="${d?'done':''}"><span class="tick"></span><span>${applyYears(a, r.grade)}</span></li>`;
   }).join('');
   return `<div class="rec-card" data-idx="${idx}">
-    <div class="rec-head">${esc(r.time)} · ${r.version==='pro'?'进阶定制':'普通配方'} · ${esc(r.grade||'')}${esc(r.major?(' · '+r.major):'')}</div>
+    <div class="rec-head"><span>${esc(r.time)} · ${r.version==='pro'?'进阶定制':'普通配方'} · ${esc(r.grade||'')}${esc(r.major?(' · '+r.major):'')}</span><button class="rec-del" type="button" title="删除这条记录">删除</button></div>
     <div class="rec-letter">${esc(letter)}</div>
     <div class="rec-kv">${kvTags(pill, s)}</div>
     <div class="rec-acts">
@@ -1182,6 +1405,9 @@ function openHistory(pid){
     : '<div class="hist-empty">这瓶药还没有留下药方记录。<br>去配一瓶并点「收进药盒」，就会出现在这里。</div>';
   $('histList').querySelectorAll('.rec-card').forEach(card=>{
     const idx = Number(card.dataset.idx);
+    card.querySelector('.rec-del').addEventListener('click', ()=>{
+      if(confirm('确定删除这条药方记录吗？删除后不可恢复。')) deleteRecord(pid, idx);
+    });
     card.querySelectorAll('.rec-acts li').forEach(li=>{
       li.addEventListener('click', ()=>{
         li.classList.toggle('done');
@@ -1203,8 +1429,23 @@ function updateRecordDone(pid, idx, done){
   }
   if(target>=0){
     recs[target].done = done;
-    localStorage.setItem('pillRecords', JSON.stringify(recs));
+    localStorage.setItem(acctKey('pillRecords'), JSON.stringify(recs));
   }
+}
+function deleteRecord(pid, idx){
+  const recs = getRecords();
+  let target = -1, seen = 0;
+  for(let i=0;i<recs.length;i++){
+    if(recs[i].pillId===pid){
+      if(seen===idx){ target=i; break; }
+      seen++;
+    }
+  }
+  if(target<0) return;
+  recs.splice(target,1);
+  localStorage.setItem(acctKey('pillRecords'), JSON.stringify(recs));
+  openHistory(pid);
+  toast('记录已删除');
 }
 $('histClose').addEventListener('click', ()=>$('historyModal').classList.remove('show'));
 $('historyModal').addEventListener('click', e=>{ if(e.target===$('historyModal')) $('historyModal').classList.remove('show'); });
@@ -1281,21 +1522,21 @@ function applyNight(on){
   $('nightLabel').textContent = on ? '深夜场·已开' : '深夜场';
 }
 let nightManual = null;
-try{ nightManual = localStorage.getItem('nightManual'); }catch(e){}
-applyNight(nightManual ? nightManual==='1' : nightNow());
+function loadNight(){
+  try{ nightManual = state.user ? localStorage.getItem(acctKey('nightManual')) : null; }catch(e){ nightManual = null; }
+  applyNight(nightManual ? nightManual==='1' : nightNow());
+}
 $('nightToggle').addEventListener('click', ()=>{
   const on = !document.body.classList.contains('night');
   applyNight(on);
   nightManual = on?'1':'0';
-  try{ localStorage.setItem('nightManual', nightManual); }catch(e){}
+  if(state.user){ try{ localStorage.setItem(acctKey('nightManual'), nightManual); }catch(e){} }
   toast(on ? '深夜场已开：夜风免费，心事打折。夜深了，早点休息' : '已切回日间场');
 });
 $('nightRemind').addEventListener('click', ()=>$('nightRemind').style.display='none');
 
 /* ===== 初始化 ===== */
-loadBox();
-bindPills();
-if('speechSynthesis' in window){ speechSynthesis.getVoices(); }
+initLogin();
 </script>
 </body>
 </html>
