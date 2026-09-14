@@ -49,6 +49,50 @@ header.top{
   box-shadow:var(--shadow-sm);flex:none;
 }
 .top-actions{display:flex;gap:8px}
+.rank-badge{
+  display:inline-flex;align-items:center;gap:6px;padding:7px 13px;border-radius:999px;
+  color:#fff;font-size:12px;font-weight:700;letter-spacing:1px;border:1.5px solid rgba(255,255,255,.6);
+  box-shadow:var(--shadow-sm);cursor:pointer;transition:transform .2s;white-space:nowrap;
+}
+.rank-badge:hover{transform:translateY(-2px)}
+.rank-badge svg{width:11px;height:11px;flex:none}
+.rank-chip{display:inline-flex;align-items:center;gap:5px}
+.rank-chip svg{width:12px;height:12px;flex:none}
+.rank-chip.big svg{width:15px;height:15px;flex:none}
+.rank-panel{margin-top:14px;padding:13px 15px;border-radius:14px;background:var(--panel);border:1.5px dashed var(--line)}
+.rank-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.rank-chip{display:inline-flex;padding:4px 13px;border-radius:999px;color:#fff;font-weight:700;font-size:13px;letter-spacing:1px}
+.rank-sub{font-size:12.5px;color:var(--ink-soft)}
+.rank-note{margin-top:9px;font-size:12px;color:var(--ink-soft);line-height:1.75}
+.rank-rule{margin-top:10px;font-size:11px;color:var(--ink-soft);opacity:.8;line-height:1.8;border-top:1px dashed var(--line);padding-top:9px}
+#noticeModal{z-index:230}
+#rankupModal{z-index:240}
+.notice-body{text-align:left;margin-top:6px}
+.notice-sec{margin:12px 0;padding:12px 14px;border-radius:12px;background:var(--bg);border:1px solid var(--line)}
+.notice-sec b{display:block;color:var(--amber-deep);font-size:14px;letter-spacing:1px;margin-bottom:6px}
+.notice-sec p{font-size:13px;color:var(--ink-soft);line-height:1.85;margin:0}
+.notice-sec p u{text-decoration-color:var(--amber-deep)}
+.notice-sec.warn{border-color:var(--amber);background:linear-gradient(180deg,rgba(245,201,123,.14),rgba(245,201,123,.05))}
+.notice-sec svg{width:14px;height:14px;flex:none;vertical-align:-2px}
+.rankup-modal{text-align:center}
+.rankup-star{color:var(--amber);width:46px;height:46px;margin:2px auto 10px;animation:rankpop .5s ease}
+.rankup-star svg{width:100%;height:100%}
+.rank-chip.big{font-size:20px;padding:10px 28px;display:inline-flex;box-shadow:0 8px 22px rgba(0,0,0,.14)}
+.rankup-note{margin-top:14px;font-size:13px;color:var(--ink-soft);line-height:1.8}
+@keyframes rankpop{0%{transform:scale(.4);opacity:0}70%{transform:scale(1.15)}100%{transform:scale(1);opacity:1}}
+#certModal{z-index:250}
+.cert-pop{width:min(600px,94vw);text-align:center}
+.cert-card{cursor:zoom-in;transition:transform .3s;margin:0}
+.cert-card.zoom{cursor:zoom-out;transform:scale(1.22)}
+.cert-body{font-size:14.5px;line-height:2.05}
+.cert-name{font-family:var(--font-title);font-size:21px;letter-spacing:3px;text-decoration:underline;text-decoration-color:rgba(255,255,255,.6);text-underline-offset:4px}
+.cert-foot{display:flex;justify-content:space-between;margin-top:18px;font-size:12.5px;opacity:.95;border-top:1px dashed rgba(255,255,255,.55);padding-top:12px}
+.cert-acts{display:flex;gap:12px;justify-content:center;margin-top:18px;background:var(--panel);border:1.5px solid var(--line);border-radius:16px;padding:14px}
+.cert-btn{flex:1;display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:12px 0;border-radius:999px;font-size:15px;font-weight:600;letter-spacing:1px;cursor:pointer;background:var(--bg);border:1.5px solid var(--line);color:var(--ink);transition:all .2s;max-width:240px}
+.cert-btn svg{width:16px;height:16px;flex:none}
+.cert-btn:hover{border-color:var(--amber);color:var(--amber-deep);transform:translateY(-1px)}
+.cert-btn.solid{background:var(--amber);border-color:var(--amber);color:#fff}
+.cert-btn.solid:hover{background:var(--amber-deep);border-color:var(--amber-deep);color:#fff}
 .top-btn{
   padding:7px 14px;border-radius:999px;border:1.5px solid var(--line);background:var(--panel);
   font-size:13px;color:var(--ink-soft);transition:all .2s;display:flex;align-items:center;gap:6px;
@@ -390,6 +434,8 @@ body.night .night-remind{display:flex;animation:riseIn .7s ease .9s both}
 }
 .btn-main:hover{opacity:.92;transform:translateY(-1px)}
 .login-tip{text-align:center;color:var(--ink-soft);font-size:11.5px;margin-top:18px;line-height:1.8;opacity:.85}
+.login-back{text-align:center;color:var(--ink-soft);font-size:13px;margin-top:14px;cursor:pointer;letter-spacing:1px;transition:color .2s}
+.login-back:hover{color:var(--amber-deep)}
 
 /* ===== 账户弹窗 ===== */
 .acct-row{display:flex;align-items:center;gap:14px;margin:18px 0 6px;padding:16px;background:var(--bg);border:1.5px solid var(--line);border-radius:18px}
@@ -439,6 +485,14 @@ body.night .night-remind{display:flex;animation:riseIn .7s ease .9s both}
   border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;transform:rotate(-12deg);
   font-weight:600;letter-spacing:1px;
 }
+.mat-card{margin-top:22px;background:var(--panel);border:1.5px dashed var(--line);border-radius:18px;padding:16px 18px}
+.mat-head{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--amber-deep);font-weight:700;letter-spacing:1px}
+.mat-head svg{width:17px;height:17px;flex:none}
+.mat-head b{color:var(--ink)}
+.mat-body{margin-top:12px;display:grid;gap:10px}
+.mat-item{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:11px 13px}
+.mat-item b{display:block;font-size:13.5px;color:var(--ink);margin-bottom:5px}
+.mat-item p{font-size:12.5px;color:var(--ink-soft);line-height:1.8;margin:0}
 .modal-close{
   margin-top:18px;width:100%;padding:13px 0;border-radius:999px;background:var(--amber);color:#fff;
   font-size:15px;font-weight:600;letter-spacing:2px;
@@ -467,6 +521,19 @@ body.night .night-remind{display:flex;animation:riseIn .7s ease .9s both}
 .rec-acts li.done .tick{background:var(--amber);border-color:var(--amber)}
 .rec-acts li.done .tick::after{content:'✓'}
 
+/* ===== 浮动导航 ===== */
+.nav-float{
+  position:fixed;right:22px;bottom:26px;z-index:80;display:flex;gap:10px;
+}
+.nav-fbtn{
+  display:flex;align-items:center;gap:6px;padding:9px 16px;border-radius:999px;
+  background:var(--panel);border:1.5px solid var(--line);color:var(--ink-soft);
+  font-size:13px;box-shadow:var(--shadow-sm);transition:all .2s;font-weight:600;letter-spacing:1px;
+}
+.nav-fbtn:hover{border-color:var(--amber);color:var(--ink);transform:translateY(-2px)}
+.nav-fbtn svg{width:14px;height:14px;flex:none}
+.nav-fbtn.end{background:var(--amber);border-color:var(--amber);color:#fff}
+
 /* ===== 提示 ===== */
 #toast{
   position:fixed;left:50%;bottom:34px;transform:translateX(-50%) translateY(20px);z-index:120;
@@ -494,11 +561,23 @@ body.night .night-remind{display:flex;animation:riseIn .7s ease .9s both}
 </style>
 </head>
 <body>
+<!-- ===== 浮动导航 ===== -->
+<div class="nav-float" id="navFloat" style="display:none">
+  <button class="nav-fbtn" id="backBtn" title="返回上一页">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+    <span>返回</span>
+  </button>
+  <button class="nav-fbtn end" id="endBtn" title="结束，回到首页">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg>
+    <span>结束</span>
+  </button>
+</div>
+
 <!-- ===== 登录/注册屏 ===== -->
 <div id="loginScreen">
   <div class="login-card">
     <div class="login-brand"><span class="logo">药</span><span>大学后悔药便利店</span></div>
-    <p class="login-sub">先登录，再进店。药盒和药方只属于你自己的账户。</p>
+    <p class="login-sub">先登录，再推门进店。药盒和药方只属于你自己的账户。</p>
     <div class="login-tabs">
       <button class="login-tab on" id="tabLogin" type="button">登录</button>
       <button class="login-tab" id="tabReg" type="button">注册</button>
@@ -516,6 +595,14 @@ body.night .night-remind{display:flex;animation:riseIn .7s ease .9s both}
       <p class="login-err" id="rgErr"></p>
       <button class="btn-main" type="submit">创建账户，进店</button>
     </form>
+    <form class="lf" id="formReset" autocomplete="off">
+      <div class="fld"><label>昵称</label><input id="rsName" type="text" placeholder="要重置的账户昵称" maxlength="12"></div>
+      <div class="fld"><label>新密码</label><input id="rsPwd" type="password" placeholder="设置新密码（4 位以上）" maxlength="20"></div>
+      <div class="fld"><label>确认新密码</label><input id="rsPwd2" type="password" placeholder="再输一次新密码" maxlength="20"></div>
+      <p class="login-err" id="rsErr"></p>
+      <button class="btn-main" type="submit">重置密码</button>
+      <p class="login-back" id="resetBack">返回登录</p>
+    </form>
     <p class="login-tip">账户可以无限创建，也可以随时删除。<br>所有数据只保存在你这台浏览器的本地。</p>
   </div>
 </div>
@@ -524,6 +611,14 @@ body.night .night-remind{display:flex;animation:riseIn .7s ease .9s both}
 <header class="top">
   <div class="brand"><span class="logo">药</span><span>大学后悔药便利店</span></div>
   <div class="top-actions">
+    <button class="top-btn" id="noticeBtn" title="进店公告">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11v2a1 1 0 0 0 1 1h2l4 5V5L6 10H4a1 1 0 0 0-1 1z"/><path d="M15 8a5 5 0 0 1 0 8"/><path d="M18 5a9 9 0 0 1 0 14"/></svg>
+      <span>公告</span>
+    </button>
+    <button class="rank-badge" id="rankBadge" title="我的等级" style="display:none">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.9 5.9 6.6.9-4.8 4.6 1.2 6.5L12 17.3 6.1 19.9l1.2-6.5L2.5 8.8l6.6-.9z"/></svg>
+      <span id="rankBadgeTxt">黑铁 1 级</span>
+    </button>
     <button class="top-btn" id="nightToggle" title="深夜模式">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
       <span id="nightLabel">深夜场</span>
@@ -758,6 +853,14 @@ body.night .night-remind{display:flex;animation:riseIn .7s ease .9s both}
           <ul id="actList"></ul>
         </div>
 
+        <div class="mat-card" id="matCard">
+          <div class="mat-head">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 15l2 2 4-4"/></svg>
+            <span>给你的资料 · <b id="matName">不挂科</b></span>
+          </div>
+          <div class="mat-body" id="matBody"></div>
+        </div>
+
         <div class="result-actions">
           <button class="btn btn-primary" id="collectBtn">收进药盒</button>
           <button class="btn btn-ghost" id="shareBtn">分享关键词卡</button>
@@ -777,6 +880,11 @@ body.night .night-remind{display:flex;animation:riseIn .7s ease .9s both}
     <div class="acct-row">
       <div class="acct-ava" id="acctAva">?</div>
       <div class="acct-info"><b id="acctName2"></b><span id="acctMeta"></span></div>
+    </div>
+    <div class="rank-panel" id="rankPanel" style="display:none">
+      <div class="rank-row"><span class="rank-chip" id="rankChip">黑铁 1 级</span><span class="rank-sub" id="rankSub"></span></div>
+      <p class="rank-note" id="rankNote"></p>
+      <p class="rank-rule">等级规则：黑铁→青铜→白银→黄金各 3 级，完成普通药盒升 1 级、进阶药盒升 2 级；集齐 8 瓶直升钻石 1 级，全部进阶定制则直升荣耀 1 级，之后每瓶每多完成 1 次升 1 级，无上限。</p>
     </div>
     <div class="acct-acts">
       <button class="btn-soft" id="logoutBtn" type="button">退出登录</button>
@@ -808,6 +916,73 @@ body.night .night-remind{display:flex;animation:riseIn .7s ease .9s both}
     <p class="modal-sub" id="histSub"></p>
     <div id="histList"></div>
     <button class="modal-close" id="histClose">收起</button>
+  </div>
+</div>
+
+<!-- ===== 公告弹窗 ===== -->
+<div class="modal-mask" id="noticeModal">
+  <div class="modal notice-modal">
+    <h3>进店公告</h3>
+    <div class="notice-body">
+      <div class="notice-sec">
+        <b>欢迎光临，<span id="noticeUser">同学</span></b>
+        <p id="noticeRankLine">你目前是：黑铁 1 级</p>
+      </div>
+      <div class="notice-sec">
+        <b>等级规则</b>
+        <p>黑铁 → 青铜 → 白银 → 黄金，各 3 级。完成一次普通药盒升 1 级，完成一次进阶药盒升 2 级。</p>
+      </div>
+      <div class="notice-sec">
+        <b>集齐奖励</b>
+        <p>集齐 8 瓶后悔药，直升「钻石 1 级」，并解锁你的「大学结业证书」；若 8 瓶全部以进阶定制完成，直升「荣耀 1 级」。之后每瓶药每多完成 1 次，再升 1 级，没有上限。</p>
+      </div>
+      <div class="notice-sec warn">
+        <b>重要提示</b>
+        <p>配完药后，<u>只有点击「收进药盒」按钮</u>，这瓶药才会被收入药盒、计入完成记录并升级哦。</p>
+      </div>
+    </div>
+    <button class="btn-main" id="noticeClose">知道了，进店</button>
+  </div>
+</div>
+
+<!-- ===== 升级弹窗 ===== -->
+<div class="modal-mask" id="rankupModal">
+  <div class="modal rankup-modal">
+    <div class="rankup-star">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 5.9 6.6.9-4.8 4.6 1.2 6.5L12 17.3 6.1 19.9l1.2-6.5L2.5 8.8l6.6-.9z"/></svg>
+    </div>
+    <h3>恭喜升级</h3>
+    <div class="rank-chip big" id="rankupChip">黑铁 2 级</div>
+    <p class="rankup-note" id="rankupNote"></p>
+    <button class="btn-main" id="rankupClose">继续进店</button>
+  </div>
+</div>
+
+<!-- ===== 证书弹窗 ===== -->
+<div class="modal-mask" id="certModal">
+  <div class="cert-pop">
+    <div class="cert cert-card" id="certCard" title="点击放大 / 缩小">
+      <div class="stamp">合格</div>
+      <h4>大学结业证书</h4>
+      <p class="cert-body">
+        兹证明<br>
+        <b class="cert-name" id="certUserName">○○ 同学</b><br>
+        已集齐「大学后悔药便利店」全部 8 瓶后悔药，<br>
+        把四年里每一个「如果当初」都收好了。<br>
+        特发此证，以资鼓励。
+      </p>
+      <div class="cert-foot">
+        <span>大学后悔药便利店</span>
+        <span id="certDate">2026 年 9 月</span>
+      </div>
+    </div>
+    <div class="cert-acts">
+      <button class="cert-btn" id="certCopy" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        复制证书图片
+      </button>
+      <button class="cert-btn solid" id="certClose" type="button">退出</button>
+    </div>
   </div>
 </div>
 
@@ -888,6 +1063,50 @@ const PILLS = [
    q:{t:'你熬夜，最常因为？',o:['作业 / 复习没做完','刷手机，停不下来','心里有事，睡不着','白天太忙，只有深夜属于自己'],e:['但你后来学会了"先睡，明早起来再做"，效率反而更高了。','但你后来把充电器放到床外，用两本书代替了短视频。','但你后来把心事写进日记再上床，睡眠就慢慢回来了。','但你后来在 11:40 上床听播客，才发现深夜的另一种用法。']}},
 ];
 
+const PILL_MATERIALS = {
+  p1:[
+    {t:'期末冲刺三步法', c:'第一步：花 2 小时翻目录和讲义标题，把整门课搭成一张骨架图；第二步：按骨架图精读重点章节，课后题一道一道做；第三步：拿往年卷 / 题库自测，错题回炉重做一遍，考前只看错题。'},
+    {t:'理工科 / 高数复习要点', c:'公式先手抄一遍再做题，别只背不写。高数抓住四大板块：极限、导数、积分、微分方程，每板块找 10 道典型题练到闭眼会做。专业课把老师 PPT 里标红 / 强调过的概念列成清单，逐条能用自己的话讲出来。'},
+    {t:'文科 / 背诵类课程', c:'用思维导图把章节串成关键词树，每章提炼 5-8 个关键词，编成口诀或小故事记。睡前把当天内容录音，通勤 / 走路时反复听，重复 3 遍基本就稳了。'},
+    {t:'复习资料哪里找', c:'校内资源优先：老师 PPT、学院往年试卷、学长学姐的笔记和题库。网课辅助：中国大学MOOC、B 站名校公开课搜课程名即可。善用学校打印店的「期末资料」和图书馆自习区的真题复印本。'},
+    {t:'考前两周时间表', c:'每天只攻两门，上午一门、下午一门，晚上统一复习当天错题。每学 45 分钟休息 10 分钟，别开夜车。最后三天只做三件事：过骨架图、重做错题、早睡。'}
+  ],
+  p2:[
+    {t:'30 秒自我介绍模板', c:'三段式：我是谁（姓名 + 专业）→ 我做过（1 件最有代表性的事，用数字量化）→ 我想要（加入 / 竞选 / 合作的理由）。先写下来念熟，再脱稿，最后只留关键词提示。'},
+    {t:'即兴发言万能框架', c:'观点 - 例子 - 总结：先亮明态度（一句话），再举一个亲身例子（30 秒），最后回扣主题（一句话）。紧张时先说「我简单说三点」，给自己争取组织语言的时间。'},
+    {t:'破冰开场白', c:'三种不尴尬的开场：请教式（这个作业你做得好好，怎么入门的？）、顺路式（你也去食堂？一起呀）、兴趣式（看到你也喜欢 XX，我最近在追…）。开口前默念：对方也在等我说话。'}
+  ],
+  p3:[
+    {t:'每日三件事清单', c:'每天起床先写下今天最重要的三件事（做完就收工，其余随缘）。列太多等于没列。完成后打个勾，晚上对着勾睡觉，比对着计划表安心得多。'},
+    {t:'4-7-8 呼吸法', c:'吸气 4 秒 → 屏住 7 秒 → 呼气 8 秒，循环 4 组。焦虑上头、刷到别人晒成绩心慌时，先做一组再继续，脑子会立刻清静。'},
+    {t:'情绪日记法', c:'每晚用 3 行字记下：今天最消耗我的一件事 / 我为什么在意它 / 明天我可以怎么做。写下来就是放下，别让「别人在干嘛」在你的脑子里过夜。'}
+  ],
+  p4:[
+    {t:'顺理成章的邀约话术', c:'用「请教」和「顺路」降低压力：这门课我有点懵，能帮我讲讲吗？/ 图书馆二楼有位置，要不要一起？/ 听说食堂新出了 XX，一起去试试？自然一点，先当朋友，再谈喜欢。'},
+    {t:'聊天破冰话题清单', c:'从共同场景切入：今天的课、食堂的菜、社团活动、最近在看什么。别查户口式连问，多说自己的事，对方才有话说。沉默不可怕，尴尬的是硬找话。'},
+    {t:'被拒绝后的三句话', c:'第一句：「好，谢谢你告诉我。」（体面收场）第二句：「我能理解。」（不追问原因）第三句：「那我还是很欣赏你，祝你顺利。」（给自己台阶，也留下风度）。开口本身就是勇敢的证据，不是失败。'}
+  ],
+  p5:[
+    {t:'误会化解四步法', c:'陈述事实（那天你没来，我以为你在生气）→ 表达感受（我挺失落的）→ 说出需求（我想跟你聊清楚）→ 提出方案（以后直接说，别猜）。当面说，别发消息，语气是藏不住的。'},
+    {t:'宿舍夜聊话题清单', c:'从轻松的聊起：家乡的吃食、童年糗事、追过最久的剧、如果中了五百万… 夜聊的价值不在话题，在「我终于听懂了你的立场」。'},
+    {t:'非暴力沟通句式', c:'把「你怎么又这样」换成「我看到…我感到…我希望…」。例如：「我看到你半夜开灯，我有点睡不着，希望下次能戴个眼罩或用小夜灯。」对事不对人，矛盾就散了一半。'}
+  ],
+  p6:[
+    {t:'第一版简历怎么写', c:'先写烂的第一稿：个人信息 + 教育背景 + 校内经历（社团、比赛、课设都算）+ 技能（软件、语言、证书）+ 自我评价。没有实习没关系，把课设项目写详细，用「负责了…实现了…结果…」的句式。'},
+    {t:'求职时间线', c:'大二：确定方向，攒一段实习或项目；大三：暑期实习 + 秋招提前批练手；大四：秋招主战场（9-11 月）+ 春招补漏（3-4 月）。现在就开始：注册求职网站、改简历、关注校招群。'},
+    {t:'约谈老师问题清单', c:'这个方向就业 / 考研的真实情况？我们学院毕业生一般都去了哪？以我的情况，建议先实习还是先考研？我现在最该补的能力是什么？老师一句话，胜过自己刷一百个帖子。'}
+  ],
+  p7:[
+    {t:'转专业流程与时间线', c:'一般在大一结束 / 大二开学初申请，具体问学院教务处。流程：查目标专业培养方案 → 提交申请表 → 笔试 / 面试 → 成绩公示。先把时间线问清楚，多数犹豫是因为不知道「什么时候、找谁、交什么」。'},
+    {t:'面试 / 考核准备', c:'准备三个问题的答案：为什么想转？（讲具体原因，别只说「不喜欢」）你对目标专业的了解？（课程、就业、行业）你为此做了什么？（自学的课、看的书、做的项目）。真诚比完美重要。'},
+    {t:'转不转的决策清单', c:'列两栏：留在本专业的 3 个理由 vs 转走的 3 个理由，各自标上「能不能改变」。能改变的（如就业前景）参考现实，不能改变的（如兴趣）听从内心。最坏结果也只是重来一次，而你有四年。'}
+  ],
+  p8:[
+    {t:'快速入睡四步法', c:'1) 睡前 1 小时手机放床外，充电器拔掉；2) 洗漱后喝半杯温水，做 4-7-8 呼吸（吸 4 秒、屏 7 秒、呼 8 秒，循环 4 组）；3) 听一段低语速播客或白噪音，别刷短视频；4) 固定上床时间，周末也尽量不破例。'},
+    {t:'21 天作息调整计划', c:'第 1-7 天：每天比前一天早睡 20 分钟，不追求一步到位；第 8-14 天：固定起床时间（闹钟放远，必须起身关）；第 15-21 天：睡前仪式固定（洗漱 → 呼吸 → 躺下），身体会到点就困。'},
+    {t:'白天补觉的正确姿势', c:'熬夜后别用大睡报复：午休控制在 20 分钟以内（超过会越睡越累），下午 3 点后不碰咖啡因，晚上照常时间睡。身体的生物钟是调出来的，不是补出来的。'}
+  ]
+};
 const MIX_STEPS = ['武火熬煮','萃取焦虑','封装未来'];
 const CLERK = {
   open:'欢迎光临后悔药便利店，今天想治哪一种不甘心？',
@@ -913,52 +1132,65 @@ function acctKey(k){ return 'acct_' + (state.user||'guest') + '_' + k; }
 function currentAccount(){
   return loadAccounts().find(a=>a.name===state.user) || null;
 }
+let pendingAction = null; /* collect | openBox */
 function showLogin(){
   document.getElementById('app').style.display = 'none';
   document.getElementById('loginScreen').classList.remove('hide');
 }
 function enterApp(){
   const u = currentAccount();
-  if(!u){ showLogin(); return; }
-  document.getElementById('acctName').textContent = u.name;
-  document.getElementById('acctAva').textContent = u.name.charAt(0).toUpperCase();
-  document.getElementById('acctName2').textContent = u.name;
-  document.getElementById('acctMeta').textContent = '注册于 ' + u.createdAt;
+  if(u){
+    document.getElementById('acctName').textContent = u.name;
+    document.getElementById('acctAva').textContent = u.name.charAt(0).toUpperCase();
+    document.getElementById('acctName2').textContent = u.name;
+    document.getElementById('acctMeta').textContent = '注册于 ' + u.createdAt;
+  }else{
+    document.getElementById('acctName').textContent = '未登录';
+    document.getElementById('acctAva').textContent = '?';
+    document.getElementById('acctName2').textContent = '游客';
+    document.getElementById('acctMeta').textContent = '登录后，药盒和药方记录才会属于你';
+  }
   document.getElementById('loginScreen').classList.add('hide');
   document.getElementById('app').style.display = '';
   loadBox();
   bindPills();
+  renderRank();
   try{ if('speechSynthesis' in window){ speechSynthesis.getVoices(); } }catch(e){}
+}
+function runPending(){
+  const act = pendingAction; pendingAction = null;
+  if(act==='enter'){ showScreen('pick'); toast('店长：' + CLERK.open); }
+  else if(act==='collect'){ document.getElementById('collectBtn').click(); }
+  else if(act==='openBox'){ document.getElementById('boxBtn').click(); }
 }
 function initLogin(){
   let cur = '';
   try{ cur = sessionStorage.getItem('pillCurUser')||''; }catch(e){}
-  if(cur){
-    if(loadAccounts().some(a=>a.name===cur)){
-      state.user = cur;
-      loadNight();
-      enterApp();
-      return;
-    }
+  if(cur && loadAccounts().some(a=>a.name===cur)){
+    state.user = cur;
   }
-  showLogin();
+  loadNight();
+  enterApp();
 }
 /* ===== 登录 / 注册 ===== */
 function loginErr(msg){ document.getElementById('liErr').textContent = msg; }
 function regErr(msg){ document.getElementById('rgErr').textContent = msg; }
+function rsErr(msg){ document.getElementById('rsErr').textContent = msg; }
 document.getElementById('tabLogin').addEventListener('click', ()=>{
   document.getElementById('tabLogin').classList.add('on');
   document.getElementById('tabReg').classList.remove('on');
   document.getElementById('formLogin').classList.add('on');
   document.getElementById('formReg').classList.remove('on');
-  loginErr(''); regErr('');
+  document.getElementById('formReset').classList.remove('on');
+  loginErr(''); regErr(''); rsErr('');
 });
 document.getElementById('tabReg').addEventListener('click', ()=>{
   document.getElementById('tabReg').classList.add('on');
   document.getElementById('tabLogin').classList.remove('on');
   document.getElementById('formReg').classList.add('on');
   document.getElementById('formLogin').classList.remove('on');
-  loginErr(''); regErr('');
+  document.getElementById('formReset').classList.remove('on');
+  loginErr(''); regErr(''); rsErr('');
 });
 document.getElementById('formLogin').addEventListener('submit', e=>{
   e.preventDefault();
@@ -967,12 +1199,22 @@ document.getElementById('formLogin').addEventListener('submit', e=>{
   if(!name || !pwd){ loginErr('昵称和密码都要填哦'); return; }
   const acc = loadAccounts().find(a=>a.name===name);
   if(!acc){ loginErr('还没有这个账户，先去「注册」一个吧'); return; }
-  if(acc.pwd !== pwd){ loginErr('密码不对，再想想'); return; }
+  if(acc.pwd !== pwd){
+    document.getElementById('formLogin').classList.remove('on');
+    document.getElementById('formReg').classList.remove('on');
+    document.getElementById('formReset').classList.add('on');
+    document.getElementById('rsName').value = name;
+    loginErr(''); regErr('');
+    rsErr('密码不对，先重置一个新密码吧');
+    return;
+  }
   state.user = name;
   try{ sessionStorage.setItem('pillCurUser', name); }catch(e){}
   toast('欢迎回来，' + name);
   loadNight();
   enterApp();
+  runPending();
+  showNotice();
 });
 document.getElementById('formReg').addEventListener('submit', e=>{
   e.preventDefault();
@@ -995,17 +1237,52 @@ document.getElementById('formReg').addEventListener('submit', e=>{
   toast('账户创建成功，欢迎进店，' + name);
   loadNight();
   enterApp();
+  runPending();
+  showNotice();
 });
+/* ===== 重置密码 ===== */
+document.getElementById('formReset').addEventListener('submit', e=>{
+  e.preventDefault();
+  const name = document.getElementById('rsName').value.trim();
+  const pwd = document.getElementById('rsPwd').value;
+  const pwd2 = document.getElementById('rsPwd2').value;
+  if(!name){ rsErr('先填要重置的账户昵称'); return; }
+  const list = loadAccounts();
+  const acc = list.find(a=>a.name===name);
+  if(!acc){ rsErr('没有这个账户，去「注册」一个吧'); return; }
+  if(!pwd || pwd.length<4){ rsErr('新密码至少 4 位'); return; }
+  if(pwd !== pwd2){ rsErr('两次输入的新密码不一致'); return; }
+  acc.pwd = pwd;
+  saveAccounts(list);
+  state.user = name;
+  try{ sessionStorage.setItem('pillCurUser', name); }catch(e){}
+  toast('密码已重置，欢迎回来，' + name);
+  loadNight();
+  enterApp();
+  runPending();
+  showNotice();
+});
+document.getElementById('resetBack').addEventListener('click', ()=>{
+  document.getElementById('formReset').classList.remove('on');
+  document.getElementById('formLogin').classList.add('on');
+  loginErr(''); regErr(''); rsErr('');
+});
+
 /* ===== 退出 / 删除账户 ===== */
-document.getElementById('acctBtn').addEventListener('click', ()=>document.getElementById('acctModal').classList.add('show'));
+document.getElementById('acctBtn').addEventListener('click', ()=>{
+  if(!state.user){ showLogin(); toast('先登录，才能管理账户'); return; }
+  renderRank();
+  document.getElementById('acctModal').classList.add('show');
+});
 document.getElementById('acctClose').addEventListener('click', ()=>document.getElementById('acctModal').classList.remove('show'));
 document.getElementById('acctModal').addEventListener('click', e=>{ if(e.target===document.getElementById('acctModal')) document.getElementById('acctModal').classList.remove('show'); });
 document.getElementById('logoutBtn').addEventListener('click', ()=>{
   document.getElementById('acctModal').classList.remove('show');
   state.user = null;
   try{ sessionStorage.removeItem('pillCurUser'); }catch(e){}
-  toast('已退出登录，下次进店记得登录');
-  showLogin();
+  toast('已退出登录，药盒和药方记录已隐藏');
+  loadNight();
+  enterApp();
 });
 document.getElementById('delAcctBtn').addEventListener('click', ()=>{
   const u = currentAccount();
@@ -1022,15 +1299,48 @@ document.getElementById('delAcctBtn').addEventListener('click', ()=>{
   state.user = null;
   document.getElementById('acctModal').classList.remove('show');
   toast('账户已删除');
-  showLogin();
+  loadNight();
+  enterApp();
 });
 
 /* ===== 工具 ===== */
-function showScreen(name){
+let histStack = [];
+function showScreen(name, noHist){
+  if(!noHist && histStack[histStack.length-1] !== state.screen){
+    histStack.push(state.screen);
+  }
   screens.forEach(s => $(`screen-${s}`).classList.toggle('active', s===name));
   state.screen = name;
+  const nav = $('navFloat');
+  if(nav) nav.style.display = (name==='open') ? 'none' : 'flex';
   window.scrollTo({top:0, behavior:'smooth'});
 }
+function stopFlowTimers(){
+  if(mixTimer) clearInterval(mixTimer);
+  if(twTimer) clearInterval(twTimer);
+}
+$('backBtn').addEventListener('click', ()=>{
+  let prev = null;
+  while(histStack.length){
+    prev = histStack.pop();
+    if(prev !== state.screen) break;
+    prev = null;
+  }
+  if(prev){
+    stopFlowTimers();
+    showScreen(prev, true);
+    toast('已返回上一页');
+  }else{
+    toast('已经在第一页啦');
+  }
+});
+$('endBtn').addEventListener('click', ()=>{
+  histStack = [];
+  stopFlowTimers();
+  stopVoice();
+  showScreen('open', true);
+  toast('欢迎下次光临，记得照顾好自己');
+});
 function toast(msg){
   const t = $('toast'); t.textContent = msg; t.classList.add('show');
   clearTimeout(t._t); t._t = setTimeout(()=>t.classList.remove('show'), 2600);
@@ -1110,6 +1420,7 @@ function buildLetter(p, s){
 
 /* ===== 开场 ===== */
 $('enterBtn').addEventListener('click', ()=>{
+  if(!state.user){ pendingAction='enter'; showLogin(); toast('先登录，才能推门进店选药'); return; }
   showScreen('pick');
   toast('店长：' + CLERK.open);
 });
@@ -1270,6 +1581,10 @@ function showResult(){
   $('letterText').textContent = '';
   typeLetter(letter);
   $('kcardBody').innerHTML = kvTags(p, state);
+  const mats = PILL_MATERIALS[p.id] || [];
+  $('matCard').style.display = mats.length ? 'block' : 'none';
+  $('matName').textContent = p.name;
+  $('matBody').innerHTML = mats.map(m=>`<div class="mat-item"><b>${esc(m.t)}</b><p>${esc(m.c)}</p></div>`).join('');
   $('actList').innerHTML = p.actions.map((a,i)=>`
     <li data-i="${i}"><span class="tick"></span><span>${applyYears(a, state.grade)}</span></li>`).join('');
   $('actList').querySelectorAll('li').forEach(li=>{
@@ -1329,6 +1644,235 @@ $('voiceBtn').addEventListener('click', speakLetter);
 $('voiceStop').addEventListener('click', stopVoice);
 if('speechSynthesis' in window) speechSynthesis.onvoiceschanged = ()=>pickVoice();
 
+/* ===== 证书 ===== */
+function showCert(){
+  const name = state.user || '同学';
+  $('certUserName').textContent = name + ' 同学';
+  const d = new Date();
+  $('certDate').textContent = d.getFullYear() + ' 年 ' + (d.getMonth()+1) + ' 月';
+  $('certCard').classList.remove('zoom');
+  $('certModal').classList.add('show');
+}
+$('certCard').addEventListener('click', ()=>$('certCard').classList.toggle('zoom'));
+function roundRectPath(x,y,w,h,r){
+  x.beginPath();
+  x.moveTo(w,y+r); x.arcTo(w,y,w,h-r,r); x.arcTo(w,h,w-r,h,r);
+  x.arcTo(0,h,r,h,r); x.arcTo(0,y,0,y+r,r);
+  x.closePath();
+}
+function certImage(){
+  return new Promise(async resolve=>{
+    try{ await document.fonts.ready; }catch(e){}
+    const W=900, H=620, c=document.createElement('canvas');
+    c.width=W; c.height=H;
+    const x=c.getContext('2d');
+    const g=x.createLinearGradient(0,0,W,H);
+    g.addColorStop(0,'#F5C97B'); g.addColorStop(1,'#E8A87C');
+    x.fillStyle=g; roundRectPath(x,0,0,W,H,26); x.fill();
+    x.strokeStyle='rgba(255,255,255,.6)'; x.lineWidth=3;
+    roundRectPath(x,26,26,W-52,H-52,16); x.stroke();
+    x.strokeStyle='rgba(255,255,255,.35)'; x.lineWidth=1.5;
+    roundRectPath(x,40,40,W-80,H-80,12); x.stroke();
+    const name = state.user || '同学';
+    const d = new Date();
+    x.textAlign='center';
+    x.fillStyle='#fff';
+    x.font='700 54px "Ma Shan Zheng","楷体",serif';
+    x.fillText('大学结业证书', W/2, 132);
+    x.font='16px "Noto Serif SC","宋体",serif';
+    x.fillStyle='rgba(255,255,255,.88)';
+    x.fillText('—— 大学后悔药便利店 ——', W/2, 172);
+    let y=250;
+    x.fillStyle='#fff';
+    x.font='700 42px "Ma Shan Zheng","楷体",serif';
+    x.fillText(name+' 同学', W/2, y);
+    const nm = x.measureText(name+' 同学');
+    x.strokeStyle='rgba(255,255,255,.7)'; x.lineWidth=2;
+    x.beginPath(); x.moveTo(W/2-nm.width/2, y+10); x.lineTo(W/2+nm.width/2, y+10); x.stroke();
+    y += 70;
+    x.font='21px "Noto Serif SC","宋体",serif';
+    x.fillStyle='rgba(255,255,255,.95)';
+    x.fillText('已集齐「大学后悔药便利店」全部 8 瓶后悔药，', W/2, y); y+=38;
+    x.fillText('把四年里每一个「如果当初」都收好了。', W/2, y); y+=38;
+    x.fillText('特发此证，以资鼓励。', W/2, y);
+    x.save(); x.translate(W-118, 128); x.rotate(-12*Math.PI/180);
+    x.strokeStyle='rgba(255,255,255,.9)'; x.lineWidth=6;
+    x.beginPath(); x.arc(0,0,46,0,Math.PI*2); x.stroke();
+    x.font='700 21px "Noto Serif SC","宋体",serif';
+    x.textBaseline='middle'; x.fillStyle='rgba(255,255,255,.9)';
+    x.fillText('合格',0,2);
+    x.restore();
+    x.font='19px "Noto Serif SC","宋体",serif';
+    x.fillStyle='rgba(255,255,255,.95)';
+    x.textAlign='left';
+    x.fillText('大学后悔药便利店', 70, H-88);
+    x.textAlign='right';
+    x.fillText(d.getFullYear()+' 年 '+(d.getMonth()+1)+' 月', W-70, H-88);
+    resolve(c);
+  });
+}
+function downloadCert(c){
+  const a = document.createElement('a');
+  a.download = '大学结业证书-' + (state.user||'同学') + '.png';
+  a.href = c.toDataURL('image/png');
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  toast('已为你生成证书图片，请保存后发送给朋友');
+}
+$('certCopy').addEventListener('click', async ()=>{
+  const c = await certImage();
+  try{
+    const blob = await new Promise(res=>c.toBlob(res,'image/png'));
+    if(blob && navigator.clipboard && navigator.clipboard.write && window.isSecureContext){
+      await navigator.clipboard.write([new ClipboardItem({'image/png': blob})]);
+      toast('证书图片已复制，直接粘贴到微信就能发送');
+      return;
+    }
+    throw new Error('clipboard unavailable');
+  }catch(e){
+    downloadCert(c);
+  }
+});
+$('certClose').addEventListener('click', ()=>$('certModal').classList.remove('show'));
+$('certModal').addEventListener('click', e=>{ if(e.target===$('certModal')) $('certModal').classList.remove('show'); });
+
+/* ===== 公告 ===== */
+function showNotice(){
+  if(state.user){
+    const r = renderRank();
+    $('noticeUser').textContent = state.user;
+    $('noticeRankLine').innerHTML = '你目前是：' + r.tier.name + rankStars(r.level) + '，继续配药升级吧';
+  }else{
+    $('noticeUser').textContent = '同学';
+    $('noticeRankLine').textContent = '登录后开启等级成长';
+  }
+  $('noticeModal').classList.add('show');
+}
+$('noticeBtn').addEventListener('click', showNotice);
+$('noticeClose').addEventListener('click', ()=>$('noticeModal').classList.remove('show'));
+$('noticeModal').addEventListener('click', e=>{ if(e.target===$('noticeModal')) $('noticeModal').classList.remove('show'); });
+$('rankupClose').addEventListener('click', ()=>$('rankupModal').classList.remove('show'));
+$('rankupModal').addEventListener('click', e=>{ if(e.target===$('rankupModal')) $('rankupModal').classList.remove('show'); });
+
+/* ===== 等级系统 ===== */
+const RANK_TIERS = [
+  {key:'iron',    name:'黑铁', color:'#8D7B68'},
+  {key:'bronze',  name:'青铜', color:'#B08D57'},
+  {key:'silver',  name:'白银', color:'#9AA3AD'},
+  {key:'gold',    name:'黄金', color:'#D4A017'},
+  {key:'diamond', name:'钻石', color:'#4A90D9'},
+  {key:'glory',   name:'荣耀', color:'#9B59B6'}
+];
+let rankCache = null;
+function rankStars(n){
+  let out = '';
+  for(let i=0;i<n;i++){
+    out += '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 5.9 6.6.9-4.8 4.6 1.2 6.5L12 17.3 6.1 19.9l1.2-6.5L2.5 8.8l6.6-.9z"/></svg>';
+  }
+  return out;
+}
+function getCounts(){
+  let c = {};
+  try{ c = JSON.parse(localStorage.getItem(acctKey('pillCounts'))||'null') || {}; }catch(e){ c = {}; }
+  if(!Object.keys(c).length){
+    const hist = getRecords();
+    if(hist.length){
+      hist.forEach(r=>{
+        if(!r || !r.pillId) return;
+        const k = r.pillId + (r.version==='pro' ? '_adv' : '_n');
+        c[k] = (c[k]||0) + 1;
+      });
+      try{ localStorage.setItem(acctKey('pillCounts'), JSON.stringify(c)); }catch(e){}
+    }
+  }
+  return c;
+}
+function bumpCount(pillId, ver){
+  const c = getCounts();
+  const k = pillId + (ver==='pro' ? '_adv' : '_n');
+  c[k] = (c[k]||0) + 1;
+  try{ localStorage.setItem(acctKey('pillCounts'), JSON.stringify(c)); }catch(e){}
+}
+function calcRank(){
+  const c = getCounts();
+  const per = {}, adv = {};
+  PILLS.forEach(p=>{
+    per[p.id] = (c[p.id+'_n']||0) + (c[p.id+'_adv']||0);
+    adv[p.id] = c[p.id+'_adv']||0;
+  });
+  const ids = PILLS.map(p=>p.id);
+  const total = ids.reduce((s,id)=>s+per[id],0);
+  const doneCount = ids.filter(id=>per[id]>0).length;
+  const allDone = ids.every(id=>per[id]>=1);
+  const allAdv = allDone && ids.every(id=>adv[id]===per[id]) && total>0;
+  let tier, level, sub, note;
+  if(allAdv){
+    tier = RANK_TIERS[5];
+    level = Math.min.apply(null, ids.map(id=>adv[id]));
+    sub = '8 瓶全部进阶定制完成';
+    note = '每瓶药再完成 1 次进阶，即可升 ' + tier.name + ' ' + (level+1) + ' 级（无上限）';
+  }else if(allDone){
+    tier = RANK_TIERS[4];
+    level = Math.min.apply(null, ids.map(id=>per[id]));
+    sub = '8 瓶全部集齐' + (total>8 ? '，含重复完成' : '');
+    note = '每瓶药再完成 1 次，即可升 ' + tier.name + ' ' + (level+1) + ' 级（无上限）';
+  }else{
+    let pts = ids.reduce((s,id)=>s + per[id] + adv[id], 0);
+    const rawPts = pts;
+    pts = Math.min(pts, 11);
+    const ti = Math.min(Math.floor(pts/3), 3);
+    const lv = pts%3+1;
+    tier = RANK_TIERS[ti]; level = lv;
+    sub = '已解锁 ' + total + ' 次药方 · 已集齐 ' + doneCount + '/8 瓶';
+    if(ti===3 && lv===3){
+      note = '已到黄金 3 级满级，集齐 8 瓶直升钻石 1 级';
+    }else{
+      const nextName = lv===3
+        ? RANK_TIERS[ti+1].name + ' 1 级'
+        : tier.name + ' ' + (lv+1) + ' 级';
+      note = '再完成 1 次（普通 +1 级 / 进阶 +2 级）即可升 ' + nextName;
+    }
+    if(doneCount<8){
+      note += '；还差 ' + (8-doneCount) + ' 瓶集齐，集齐 8 瓶直升钻石 1 级';
+    }
+  }
+  return {tier, level, sub, note, total, doneCount, allDone, allAdv};
+}
+function renderRank(){
+  const r = calcRank();
+  const badge = $('rankBadge');
+  if(!state.user){
+    badge.style.display = 'none';
+    $('rankPanel').style.display = 'none';
+    rankCache = r;
+    return r;
+  }
+  badge.style.display = 'inline-flex';
+  badge.style.background = r.tier.color;
+  $('rankBadgeTxt').innerHTML = r.tier.name + rankStars(r.level);
+  const panel = $('rankPanel');
+  panel.style.display = '';
+  const chip = $('rankChip');
+  chip.style.background = r.tier.color;
+  chip.innerHTML = r.tier.name + rankStars(r.level);
+  $('rankSub').textContent = r.sub;
+  $('rankNote').textContent = r.note;
+  rankCache = r;
+  return r;
+}
+function rankAfterChange(){
+  const before = rankCache ? (rankCache.tier.key + rankCache.level) : '';
+  const r = renderRank();
+  const after = r.tier.key + r.level;
+  if(before && before!==after){
+    const chip = $('rankupChip');
+    chip.style.background = r.tier.color;
+    chip.innerHTML = r.tier.name + rankStars(r.level);
+    $('rankupNote').textContent = r.note || '继续配药，解锁更多等级';
+    $('rankupModal').classList.add('show');
+  }
+  return r;
+}
+
 /* ===== 药盒 ===== */
 function loadBox(){
   try{ state.collected = JSON.parse(localStorage.getItem(acctKey('pillBox'))||'[]'); }catch(e){ state.collected = []; }
@@ -1339,6 +1883,7 @@ function saveBox(){
   $('boxCount').textContent = `药盒 ${state.collected.length}/8`;
 }
 $('collectBtn').addEventListener('click', ()=>{
+  if(!state.user){ pendingAction='collect'; showLogin(); toast('先登录，才能把药收进药盒'); return; }
   const id = state.pill.id;
   if(state.collected.includes(id)){
     saveRecord();
@@ -1352,6 +1897,7 @@ $('collectBtn').addEventListener('click', ()=>{
   if(state.collected.length===8){
     toast('8 瓶集齐！你的「大学结业证书」已解锁');
     openBox();
+    showCert();
   }
 });
 function nowStr(){
@@ -1376,6 +1922,8 @@ function saveRecord(){
   const per = {};
   recs = recs.filter(r=>{ per[r.pillId]=(per[r.pillId]||0)+1; return per[r.pillId]<=5; });
   localStorage.setItem(acctKey('pillRecords'), JSON.stringify(recs));
+  bumpCount(rec.pillId, rec.version);
+  if(state.user) rankAfterChange();
 }
 function renderRecCard(pill, r, idx){
   const s = Object.assign({}, r, {answer:(r.qIndex!=null && pill.q) ? pill.q.o[r.qIndex] : ''});
@@ -1463,11 +2011,14 @@ function openBox(){
   const done = state.collected.length===8;
   $('certBox').style.display = done ? 'block' : 'none';
   if(done){
-    $('certName').innerHTML = `恭喜你，8 瓶后悔药全部集齐。<br>你把四年里每一个「如果当初」都收好了，<br>接下来的路，好好走。`;
+    $('certName').innerHTML = `兹证明 <b>${esc(state.user||'你')}</b> 同学，8 瓶后悔药全部集齐。<br>你把四年里每一个「如果当初」都收好了，<br>接下来的路，好好走。`;
   }
   $('boxModal').classList.add('show');
 }
-$('boxBtn').addEventListener('click', openBox);
+$('boxBtn').addEventListener('click', ()=>{
+  if(!state.user){ pendingAction='openBox'; showLogin(); toast('先登录，才能查看药盒'); return; }
+  openBox();
+});
 $('boxClose').addEventListener('click', ()=>$('boxModal').classList.remove('show'));
 $('boxModal').addEventListener('click', e=>{ if(e.target===$('boxModal')) $('boxModal').classList.remove('show'); });
 
