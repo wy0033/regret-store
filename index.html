@@ -350,6 +350,7 @@ body.night .night-remind{display:flex;animation:riseIn .7s ease .9s both}
   background:linear-gradient(180deg,var(--panel) 0%,var(--bg) 100%);
   border:1.5px solid var(--line);border-radius:20px;padding:24px 24px 26px;
   font-size:15px;line-height:2.05;min-height:190px;box-shadow:var(--shadow-sm);position:relative;
+  white-space:pre-line;overflow-wrap:break-word;word-break:break-word;
 }
 .letter::before{
   content:'信';position:absolute;top:-14px;right:22px;width:44px;height:44px;border-radius:50%;
@@ -428,6 +429,13 @@ body.night .night-remind{display:flex;animation:riseIn .7s ease .9s both}
 .lf input:focus{outline:none;border-color:var(--amber)}
 .lf .fld{margin-bottom:16px}
 .login-err{min-height:20px;font-size:12.5px;color:#C25E4A;margin:2px 2px 10px;line-height:1.6;font-weight:600}
+.key-hint{
+  display:flex;align-items:flex-start;gap:7px;
+  padding:9px 13px;margin:0 0 16px;border:1px dashed var(--amber);border-radius:12px;
+  background:rgba(232,168,124,.10);color:var(--ink-soft);font-size:12px;line-height:1.65;text-align:left;
+}
+.key-hint b{color:var(--amber-deep);font-weight:700}
+.key-hint svg{width:14px;height:14px;flex:none;margin-top:2px;color:var(--amber-deep)}
 .btn-main{
   width:100%;padding:13px 0;border-radius:999px;background:var(--amber);color:#fff;
   font-size:15.5px;font-weight:700;letter-spacing:3px;box-shadow:var(--shadow-sm);transition:all .2s;
@@ -582,16 +590,23 @@ body.night .night-remind{display:flex;animation:riseIn .7s ease .9s both}
       <button class="login-tab on" id="tabLogin" type="button">登录</button>
       <button class="login-tab" id="tabReg" type="button">注册</button>
     </div>
+    <div class="key-hint">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+      <span id="keyHintText">请输入 <b>API Key</b>，否则回答不够精确。</span>
+    </div>
     <form class="lf on" id="formLogin" autocomplete="off">
       <div class="fld"><label>昵称</label><input id="liName" type="text" placeholder="你的昵称" maxlength="12"></div>
       <div class="fld"><label>密码</label><input id="liPwd" type="password" placeholder="登录密码" maxlength="20"></div>
+      <div class="fld"><label>DeepSeek API Key（选填）</label><input id="liKey" type="password" placeholder="sk-…" maxlength="80" autocomplete="new-password"></div>
       <p class="login-err" id="liErr"></p>
       <button class="btn-main" type="submit">进入便利店</button>
+      <p class="login-back" id="keyClear" style="display:none">清除已保存的 API Key</p>
     </form>
     <form class="lf" id="formReg" autocomplete="off">
       <div class="fld"><label>昵称</label><input id="rgName" type="text" placeholder="取一个昵称（不可重名）" maxlength="12"></div>
       <div class="fld"><label>密码</label><input id="rgPwd" type="password" placeholder="设置密码（4 位以上）" maxlength="20"></div>
       <div class="fld"><label>确认密码</label><input id="rgPwd2" type="password" placeholder="再输一次密码" maxlength="20"></div>
+      <div class="fld"><label>DeepSeek API Key（选填）</label><input id="rgKey" type="password" placeholder="sk-…" maxlength="80" autocomplete="new-password"></div>
       <p class="login-err" id="rgErr"></p>
       <button class="btn-main" type="submit">创建账户，进店</button>
     </form>
@@ -603,7 +618,7 @@ body.night .night-remind{display:flex;animation:riseIn .7s ease .9s both}
       <button class="btn-main" type="submit">重置密码</button>
       <p class="login-back" id="resetBack">返回登录</p>
     </form>
-    <p class="login-tip">账户可以无限创建，也可以随时删除。<br>所有数据只保存在你这台浏览器的本地。</p>
+    <p class="login-tip">账户可以无限创建，也可以随时删除。<br>所有数据只保存在你这台浏览器的本地。<br>API Key 只存在本机，用于生成 AI 信件与专属资料；不填则使用店长的固定配方。</p>
   </div>
 </div>
 
@@ -1208,6 +1223,7 @@ document.getElementById('formLogin').addEventListener('submit', e=>{
     rsErr('密码不对，先重置一个新密码吧');
     return;
   }
+  if(trySaveAiKey(loginErr) === false) return; // Key 格式错误时不进店，方便当场修改
   state.user = name;
   try{ sessionStorage.setItem('pillCurUser', name); }catch(e){}
   toast('欢迎回来，' + name);
@@ -1226,6 +1242,7 @@ document.getElementById('formReg').addEventListener('submit', e=>{
   if(!pwd){ regErr('设置一个密码吧'); return; }
   if(pwd.length<4){ regErr('密码至少 4 位'); return; }
   if(pwd !== pwd2){ regErr('两次输入的密码不一致'); return; }
+  if(trySaveAiKey(regErr) === false) return;
   const list = loadAccounts();
   if(list.some(a=>a.name===name)){ regErr('这个昵称已经有人用啦，换一个试试（不能重名）'); return; }
   const d = new Date();
@@ -1374,6 +1391,7 @@ function applyYears(text, g){
     .split('四年后').join(laterLabel(g));
 }
 function buildLetter(p, s){
+  if(s.aiLetter) return s.aiLetter; // AI 动态信件优先
   let t = fill(p.letter, s);
   t = t.replace('嘿，现在的你', '嘿，' + (s.nick || '现在的你'));
   if(s.version==='pro' && s.answer && p.q){
@@ -1442,6 +1460,8 @@ function bindPills(){
 }
 function choose(id){
   state.pill = PILLS.find(p=>p.id===id);
+  state.aiLetter = null; state._aiPromise = null; // 换药时清空上一封 AI 信
+  state.aiMaterials = null; state._aiMatPromise = null; // 同时清空上一份 AI 资料
   $('inputTitle').textContent = `「${state.pill.name}」· 来，把方子告诉我`;
   $('inputSub').textContent = `配药前，选一个配方：速配，或深度定制`;
   $('anxietyLabel').textContent = `最近最让你焦虑的一件事（${state.pill.name}相关）`;
@@ -1523,6 +1543,7 @@ $('startMix').addEventListener('click', ()=>{
   $('mixNote').textContent = state.pill.id==='p8' ? CLERK.night + ' ' + CLERK.paper : CLERK.paper;
   showScreen('mix');
   runMix();
+  requestAiContent(state.pill, state); // 配药动画进行的同时，后台让 DeepSeek 写信 + 定制资料
 });
 
 /* ===== 配药动画 ===== */
@@ -1571,20 +1592,207 @@ function kvTags(p, s){
   return kv.join('');
 }
 
+/* ===== DeepSeek AI 动态信件 ===== */
+const AI_CFG = {
+  endpoint: 'https://api.deepseek.com/chat/completions',
+  model: 'deepseek-chat' // 不再内置 API Key：用户不填就走静态回答
+};
+/* ===== 用户自定义 API Key 管理 ===== */
+const AI_KEY_STORE = 'regretStoreAiKey';
+function aiKey(){ // 只用用户自己填的 Key，没有就返回空（走静态回答）
+  try{ return (localStorage.getItem(AI_KEY_STORE)||'').trim(); }catch(e){ return ''; }
+}
+function customKeySaved(){
+  try{ return !!(localStorage.getItem(AI_KEY_STORE)||'').trim(); }catch(e){ return false; }
+}
+function refreshKeyHint(){
+  const saved = customKeySaved();
+  const ph = saved ? '已保存自定义 Key，之后都用它（留空保持）' : 'sk-…（不填则使用店长的固定配方回答）';
+  ['liKey','rgKey'].forEach(id=>{ const el=$(id); if(el){ el.placeholder = ph; el.value=''; } });
+  const kc = $('keyClear'); if(kc) kc.style.display = saved ? 'block' : 'none';
+  const hint = $('keyHintText');
+  if(hint) hint.innerHTML = saved
+    ? '已配置 <b>API Key</b>，回答会为你个性化生成。'
+    : '请输入 <b>API Key</b>，否则回答不够精确。';
+}
+function trySaveAiKey(errFn){ // 登录/注册时从输入框保存 Key；返回 null=未填写，true=已保存，false=格式错误
+  const el = [$('liKey'), $('rgKey')].filter(Boolean).find(x=>x.value.trim());
+  if(!el) return null;
+  const k = el.value.trim();
+  if(!/^sk-[A-Za-z0-9]{16,}$/.test(k)){
+    if(errFn) errFn('API Key 格式不太对：应以 sk- 开头，后跟一串字母数字');
+    return false;
+  }
+  try{ localStorage.setItem(AI_KEY_STORE, k); }catch(e){}
+  refreshKeyHint();
+  toast('API Key 已保存，之后的 AI 信件和资料都用它生成');
+  return true;
+}
+$('keyClear').addEventListener('click', ()=>{
+  try{ localStorage.removeItem(AI_KEY_STORE); }catch(e){}
+  refreshKeyHint();
+  toast('已清除 API Key，之后使用店长的固定配方回答');
+});
+refreshKeyHint();
+function aiUserInfo(p, s){
+  return JSON.stringify({
+    药名: p.name, 这瓶药的承诺: p.promise, 年级: s.grade,
+    专业: s.major || '未填写', 性别: s.gender || '保密',
+    收信人昵称: s.nick || '无（开头就写「嘿，现在的你」）',
+    最焦虑的一件事: s.anxiety || '未填写',
+    想弥补的小事: s.detail || '无',
+    写在方子上的目标: s.goal || '无',
+    当前状态: s.stateInfo || '未填写', 心情: s.mood || '未填写',
+    配药时的问题回答: s.answer || '无'
+  }, null, 1);
+}
+async function fetchAiLetter(p, s){
+  const sign = gradeSign(s.grade);
+  const sys = [
+    '你是「大学后悔药便利店」的店长，一位擅长写信的治愈系作家。',
+    '现在你要以「' + sign + '」的身份，给一位大学生写一封信：口吻是未来的他/她自己回头看现在的自己。',
+    '写作要求：',
+    '1. 开头第一句是「嘿，' + (s.nick || '现在的你') + '」，结尾单独一行落款「—— ' + sign + '」，落款之后不要再写任何内容。',
+    '2. 全文分 3～4 个自然段，每段之间空一行；每句话都要主谓完整、通顺连贯，像正常人说话，禁止堆砌意象、禁止病句和成分残缺的长串。',
+    '3. 紧扣用户填写的焦虑、目标和小事，写具体、可感的细节；不要空泛说教，不要喊口号，不要列条目。',
+    '4. 温暖、克制，像深夜电台主持人轻声说话。全文严格控制在 300～400 字。',
+    '5. 时间线自洽：' + sign + ' 写给' + agoLabel(s.grade) + '的自己，行文中的时间参照要与这个跨度一致。',
+    '6. 直接输出信的正文：不要标题、不要 markdown、不要任何解释或前后缀。'
+  ].join('\n');
+  const ctrl = new AbortController();
+  const timer = setTimeout(()=>ctrl.abort(), 40000);
+  try{
+    const res = await fetch(AI_CFG.endpoint, {
+      method: 'POST',
+      signal: ctrl.signal,
+      headers: {'Content-Type':'application/json', 'Authorization':'Bearer ' + aiKey()},
+      body: JSON.stringify({
+        model: AI_CFG.model,
+        messages: [
+          {role:'system', content: sys},
+          {role:'user', content: '这位同学的配药信息如下，请写这封信：\n' + aiUserInfo(p, s)}
+        ],
+        temperature: 1.05,
+        max_tokens: 1200,
+        stream: false
+      })
+    });
+    if(!res.ok) throw new Error('AI 请求失败 ' + res.status);
+    const data = await res.json();
+    const choice = (data.choices||[])[0]||{};
+    let text = ((choice.message||{}).content || '').trim();
+    if(!text) throw new Error('AI 返回为空');
+    text = tidyLetter(text);
+    return text;
+  } finally {
+    clearTimeout(timer);
+  }
+}
+// 信件收尾保护：超长截到完整句、去掉残缺尾句、确保落款收尾
+function tidyLetter(t){
+  const sign = gradeSign(state.grade);
+  t = t.replace(/^```[\s\S]*?\n/,'').replace(/```$/,'').trim(); // 防markdown包裹
+  if(t.length > 560){
+    const cut = t.slice(0, 560);
+    const lastEnd = Math.max(cut.lastIndexOf('。'), cut.lastIndexOf('！'), cut.lastIndexOf('？'), cut.lastIndexOf('\n'));
+    if(lastEnd > 200) t = cut.slice(0, lastEnd + 1);
+  }
+  if(!t.includes('—— ' + sign)){
+    t = t.replace(/[。！？]*$/, '') + '。\n\n—— ' + sign;
+  }
+  return t.trim();
+}
+function requestAiLetter(p, s){
+  state._aiPromise = fetchAiLetter(p, s)
+    .then(t=>{ state.aiLetter = t; return t; })
+    .catch(()=>{ state.aiLetter = null; return null; });
+}
+async function fetchAiMaterials(p, s){
+  const sys = [
+    '你是「大学后悔药便利店」的店长，擅长给大学生定制实用的行动资料。',
+    '请围绕这瓶药的主题（' + p.name + '：' + p.promise + '），结合这位同学的具体情况，写 4～5 张实用资料卡。',
+    '每张卡要求：t=卡片标题（不超过 10 个字）；c=卡片内容（60～110 字，具体、可执行、贴合同学的专业和场景，可以写步骤、话术、清单、时间安排，禁止空话套话）。',
+    '如果有明确专业，至少有一张卡要专门结合该专业的课程 / 场景来写。',
+    '严格只输出 JSON，格式：{"materials":[{"t":"标题","c":"内容"}]}，不要 markdown 代码块，不要任何解释。'
+  ].join('\n');
+  const ctrl = new AbortController();
+  const timer = setTimeout(()=>ctrl.abort(), 40000);
+  try{
+    const res = await fetch(AI_CFG.endpoint, {
+      method: 'POST',
+      signal: ctrl.signal,
+      headers: {'Content-Type':'application/json', 'Authorization':'Bearer ' + aiKey()},
+      body: JSON.stringify({
+        model: AI_CFG.model,
+        messages: [
+          {role:'system', content: sys},
+          {role:'user', content: '这位同学的配药信息如下，请定制资料卡：\n' + aiUserInfo(p, s)}
+        ],
+        temperature: 0.8,
+        max_tokens: 1500,
+        stream: false
+      })
+    });
+    if(!res.ok) throw new Error('AI 请求失败 ' + res.status);
+    const data = await res.json();
+    let raw = ((((data.choices||[])[0]||{}).message)||{}).content || '';
+    raw = raw.replace(/```(json)?/gi,'').trim();
+    const a = raw.indexOf('{'), b = raw.lastIndexOf('}');
+    if(a < 0 || b <= a) throw new Error('AI 返回不是 JSON');
+    const obj = JSON.parse(raw.slice(a, b + 1));
+    const list = (obj.materials||[]).filter(m=>m && typeof m.t==='string' && typeof m.c==='string' && m.t.trim() && m.c.trim())
+      .map(m=>({t:m.t.trim().slice(0,16), c:m.c.trim()}));
+    if(!list.length) throw new Error('AI 资料为空');
+    return list;
+  } finally {
+    clearTimeout(timer);
+  }
+}
+function requestAiContent(p, s){
+  state.aiLetter = null; state.aiMaterials = null;
+  state._aiPromise = null; state._aiMatPromise = null;
+  if(!aiKey()) return; // 未填 API Key：不调接口，全部走静态回答
+  requestAiLetter(p, s);
+  state._aiMatPromise = fetchAiMaterials(p, s)
+    .then(list=>{ state.aiMaterials = list; return list; })
+    .catch(()=>{ state.aiMaterials = null; return null; });
+}
+
 /* ===== 成品 ===== */
-function showResult(){
+async function showResult(){
   const p = state.pill;
   $('resultImg').src = imgMap[p.id];
   $('resultTag').textContent = '后悔药已配好 · ' + p.no;
   $('resultTitle').textContent = `「${p.name}」后悔药`;
+  let aiText = null;
+  const aiOn = !!state._aiPromise;
+  if(aiOn){
+    $('letterText').textContent = '墨水正从未来寄来，请稍候……';
+    aiText = await state._aiPromise;
+  }
+  if(aiText){ toast('这封信是 AI 根据你的方子现写的'); }
+  else if(!aiOn){ toast('未填 API Key，先用店长的固定配方；填了会更懂你'); }
+  else{ toast('AI 小憩了一下，这封由店长手写补上'); }
   const letter = buildLetter(p, state);
   $('letterText').textContent = '';
   typeLetter(letter);
   $('kcardBody').innerHTML = kvTags(p, state);
-  const mats = PILL_MATERIALS[p.id] || [];
-  $('matCard').style.display = mats.length ? 'block' : 'none';
+  const staticMats = PILL_MATERIALS[p.id] || [];
   $('matName').textContent = p.name;
-  $('matBody').innerHTML = mats.map(m=>`<div class="mat-item"><b>${esc(m.t)}</b><p>${esc(m.c)}</p></div>`).join('');
+  const renderMats = list=>{
+    $('matBody').innerHTML = list.map(m=>`<div class="mat-item"><b>${esc(m.t)}</b><p>${esc(m.c)}</p></div>`).join('');
+  };
+  if(state._aiMatPromise){
+    $('matCard').style.display = 'block';
+    $('matBody').innerHTML = '<div class="mat-item"><b>专属资料定制中…</b><p>店长正在按你的专业和方子现写这份资料，马上就好。</p></div>';
+    const aiMats = await state._aiMatPromise;
+    if(aiMats && aiMats.length){ renderMats(aiMats); }
+    else if(staticMats.length){ renderMats(staticMats); toast('AI 小憩了一下，资料用店长珍藏版'); }
+    else{ $('matCard').style.display = 'none'; }
+  }else{
+    $('matCard').style.display = staticMats.length ? 'block' : 'none';
+    renderMats(staticMats);
+  }
   $('actList').innerHTML = p.actions.map((a,i)=>`
     <li data-i="${i}"><span class="tick"></span><span>${applyYears(a, state.grade)}</span></li>`).join('');
   $('actList').querySelectorAll('li').forEach(li=>{
@@ -1914,6 +2122,7 @@ function saveRecord(){
     major: state.major, gender: state.gender, goal: state.goal,
     nick: state.nick, detail: state.detail, stateInfo: state.stateInfo,
     mood: state.mood, qIndex: state.qIndex, anxiety: state.anxiety,
+    ai: state.aiLetter || '',
     time: nowStr(),
     done: Array.from(document.querySelectorAll('#actList li')).map(li=>li.classList.contains('done'))
   };
@@ -1927,7 +2136,7 @@ function saveRecord(){
 }
 function renderRecCard(pill, r, idx){
   const s = Object.assign({}, r, {answer:(r.qIndex!=null && pill.q) ? pill.q.o[r.qIndex] : ''});
-  const letter = buildLetter(pill, s);
+  const letter = r.ai || buildLetter(pill, s);
   const acts = (pill.actions||[]).map((a,i)=>{
     const d = r.done && r.done[i];
     return `<li data-i="${i}" class="${d?'done':''}"><span class="tick"></span><span>${applyYears(a, r.grade)}</span></li>`;
